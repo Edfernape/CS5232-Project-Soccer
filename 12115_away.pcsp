@@ -226,4 +226,4 @@ UpdatePos(p, e) = case {
 #assert AtkKep |= F G Goal1 with prob;
 #assert AtkKep |= F G Goal2 with prob;
 #assert AtkKep |= F G Goal3 with prob;
-#assert AtkKep |= F G Goal4 with prob;
+#assert AtkKep |= F G Goal4 with prob; // F: eventually holds somewhere on subsequent path; G: has to hold entire subsequent path
