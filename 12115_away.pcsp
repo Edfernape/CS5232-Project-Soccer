@@ -68,7 +68,7 @@ AtkDef = [pos[R] == 1]Def(73, 71, 38, R) [] [pos[CR] == 1]Def(68, 63, 38, CR) []
 // The prob. to lose for the attacking team's midfielders is based on the defending team's midfielders
 // The prob. to lose for the attacking team's forwards is based on the defending team's defenders
 // Added: parameter pk, PenaltyKick to For
-// TODO: add guarded process BackwardPass to Mid and For
+// Added: guarded process BackwardPass to Mid and For
 AtkMid = [pos[RL] == 1]Mid(79, 76, 74, 59, RL) [] [pos[C] == 1]Mid(83, 80, 57, 59, C) [] [pos[LR] == 1]Mid(78, 73, 75, 59, LR);
 AtkFor = [pos[RL] == 1]For(77, 75, 74, 77, 75, RL, 100) [] [pos[C] == 1]For(75, 73, 66, 76, 75, C, 100) [] [pos[LR] == 1]For(73, 65, 65, 69, 75, LR, 100);
 
@@ -99,8 +99,7 @@ Def(i, j, k, p) = [atkMidPos[p-2] == 1 || atkMidPos[p-1] == 1 || atkMidPos[p] ==
 	k: tackled{danger = 4;} -> Skip
 };
 
-
-// TODO: add guarded process for BackwardPass
+// Added: guarded process for BackwardPass
 Mid(i, j, k, l, p) = [atkForPos[p-2] == 1 || atkForPos[p-1] == 1 || atkForPos[p] == 1 || atkForPos[p+1] == 1 || atkForPos[p+2] == 1]shortPass -> pcase {
 	i: pass -> UpdatePos(p, SP); AtkFor
 	l: tackled{danger = 3;} -> Skip
@@ -110,33 +109,42 @@ Mid(i, j, k, l, p) = [atkForPos[p-2] == 1 || atkForPos[p-1] == 1 || atkForPos[p]
 } [] [defKepPos[C] == 1]longShot -> pcase {
 	k: shoot -> UpdatePos(p, LS); DefKep
 	l: tackled{danger = 3;} -> Skip
+} [] [(backwardPassCount < BACKWARDPASS_MAX) && (atkDefPos[p-2] == 1 || atkDefPos[p-1] == 1 || atkDefPos[p] == 1 || atkDefPos[p+1] == 1 || atkDefPos[p+2] == 1)]backwardPass -> pcase {
+	i: pass -> UpdatePos(p, BP); AtkDef
+	l: tackled{danger = 3;} -> Skip
 };
 
 // Added: pk pcase (Penalty Kick, determined by average foul values of defending team's defenders)
-// TODO: add guarded process for BackwardPass
+// Added: guarded process for BackwardPass
 For(i, j, k, l, m, p, pk) = [defKepPos[C] == 1]finish -> pcase {
 	i: shoot -> UpdatePos(p, FI); DefKep
 	m: tackled -> pcase {
 		pk: penaltyKick -> UpdatePos(p, FI); DefKep // penalty kick
-		100 - pk: {danger = 2} -> Skip // no penalty
+		100 - pk: {danger = 2;} -> Skip // no penalty
 	}
 } [] [defKepPos[C] == 1]longShot -> pcase {
 	j: shoot -> UpdatePos(p, LS); DefKep
 	m: tackled -> pcase {
 		pk: penaltyKick -> UpdatePos(p, FI); DefKep // penalty kick
-		100 - pk: {danger = 2} -> Skip // no penalty
+		100 - pk: {danger = 2;} -> Skip // no penalty
 	}
 } [] [defKepPos[C] == 1 && inAir == true]volley -> pcase {
 	k: shoot -> UpdatePos(p, VO); DefKep
 	m: tackled -> pcase {
 		pk: penaltyKick -> UpdatePos(p, FI); DefKep // penalty kick
-		100 - pk: {danger = 2} -> Skip // no penalty
+		100 - pk: {danger = 2;} -> Skip // no penalty
 	}
 } [] [defKepPos[C] == 1 && inAir == true]header -> pcase {
 	l: shoot -> UpdatePos(p, HD); DefKep
 	m: tackled -> pcase {
 		pk: penaltyKick -> UpdatePos(p, FI); DefKep // penalty kick
-		100 - pk: {danger = 2} -> Skip // no penalty
+		100 - pk: {danger = 2;} -> Skip // no penalty
+	}
+} [] [(backwardPassCount < BACKWARDPASS_MAX) && (atkMidPos[p-2] == 1 || atkMidPos[p-1] == 1 || atkMidPos[p] == 1 || atkMidPos[p+1] == 1 || atkMidPos[p+2] == 1)]backwardPass -> pcase {
+	i: pass -> UpdatePos(p, BP); AtkMid
+	m: tackled -> pcase {
+		pk: penaltyKick -> UpdatePos(p, FI); DefKep // penalty kick
+		100 - pk: {danger = 2;} -> Skip // no penalty
 	}
 };
 
@@ -145,41 +153,48 @@ Kep_2(i, p) = attemptSave -> pcase {
 	100-i: concede -> Skip
 };
 
+// Added: cases for BackwardPass
 UpdatePos(p, e) = case {
 	p == L: 
 		case {
 			e == SP: {pos[L] = 1; pos[LR] = 1; pos[CL] = 1; pos[C] = 0; pos[CR] = 0; pos[RL] = 0; pos[R] = 0;} -> Skip
 			e == LP: {pos[L] = 0; pos[LR] = 0; pos[CL] = 0; pos[C] = 1; pos[CR] = 1; pos[RL] = 1; pos[R] = 1;} -> Skip
+			e == BP: {pos[L] = 1; pos[LR] = 1; pos[CL] = 1; pos[C] = 0; pos[CR] = 0; pos[RL] = 0; pos[R] = 0; backwardPassCount = backwardPassCount + 1;} -> Skip
 			default: {pos[L] = 0; pos[LR] = 0; pos[CL] = 0; pos[C] = 1; pos[CR] = 0; pos[RL] = 0; pos[R] = 0;} -> Skip
 		}
 	p == LR:
 		case {
 			e == SP: {pos[L] = 1; pos[LR] = 1; pos[CL] = 1; pos[C] = 1; pos[CR] = 0; pos[RL] = 0; pos[R] = 0;} -> Skip
 			e == LP: {pos[L] = 0; pos[LR] = 0; pos[CL] = 0; pos[C] = 0; pos[CR] = 1; pos[RL] = 1; pos[R] = 1;} -> Skip
+			e == BP: {pos[L] = 1; pos[LR] = 1; pos[CL] = 1; pos[C] = 1; pos[CR] = 0; pos[RL] = 0; pos[R] = 0; backwardPassCount = backwardPassCount + 1;} -> Skip
 			default: {pos[L] = 0; pos[LR] = 0; pos[CL] = 0; pos[C] = 1; pos[CR] = 0; pos[RL] = 0; pos[R] = 0;} -> Skip
 		}
 	p == CL: 
 		case {
 			e == SP: {pos[L] = 1; pos[LR] = 1; pos[CL] = 1; pos[C] = 1; pos[CR] = 1; pos[RL] = 0; pos[R] = 0;} -> Skip
 			e == LP: {pos[L] = 0; pos[LR] = 0; pos[CL] = 0; pos[C] = 0; pos[CR] = 0; pos[RL] = 1; pos[R] = 1;} -> Skip
+			e == BP: {pos[L] = 1; pos[LR] = 1; pos[CL] = 1; pos[C] = 1; pos[CR] = 1; pos[RL] = 0; pos[R] = 0; backwardPassCount = backwardPassCount + 1;} -> Skip
 			default: {pos[L] = 0; pos[LR] = 0; pos[CL] = 0; pos[C] = 1; pos[CR] = 0; pos[RL] = 0; pos[R] = 0;} -> Skip
 		}
 	p == C:
 		case {
 			e == SP: {pos[L] = 0; pos[LR] = 1; pos[CL] = 1; pos[C] = 1; pos[CR] = 1; pos[RL] = 1; pos[R] = 0;} -> Skip
 			e == LP: {pos[L] = 1; pos[LR] = 0; pos[CL] = 0; pos[C] = 0; pos[CR] = 0; pos[RL] = 0; pos[R] = 1;} -> Skip
+			e == BP: {pos[L] = 0; pos[LR] = 1; pos[CL] = 1; pos[C] = 1; pos[CR] = 1; pos[RL] = 1; pos[R] = 0; backwardPassCount = backwardPassCount + 1;} -> Skip
 			default: {pos[L] = 0; pos[LR] = 0; pos[CL] = 0; pos[C] = 1; pos[CR] = 0; pos[RL] = 0; pos[R] = 0;} -> Skip
 		}	
 	p == CR:
 		case {
 			e == SP: {pos[L] = 0; pos[LR] = 0; pos[CL] = 1; pos[C] = 1; pos[CR] = 1; pos[RL] = 1; pos[R] = 1;} -> Skip
 			e == LP: {pos[L] = 1; pos[LR] = 1; pos[CL] = 0; pos[C] = 0; pos[CR] = 0; pos[RL] = 0; pos[R] = 0;} -> Skip
+			e == BP: {pos[L] = 0; pos[LR] = 0; pos[CL] = 1; pos[C] = 1; pos[CR] = 1; pos[RL] = 1; pos[R] = 1; backwardPassCount = backwardPassCount + 1;} -> Skip
 			default: {pos[L] = 0; pos[LR] = 0; pos[CL] = 0; pos[C] = 1; pos[CR] = 0; pos[RL] = 0; pos[R] = 0;} -> Skip
 		}
 	p == RL:
 		case {
 			e == SP: {pos[L] = 0; pos[LR] = 0; pos[CL] = 0; pos[C] = 1; pos[CR] = 1; pos[RL] = 1; pos[R] = 1;} -> Skip
 			e == LP: {pos[L] = 1; pos[LR] = 1; pos[CL] = 1; pos[C] = 0; pos[CR] = 0; pos[RL] = 0; pos[R] = 0;} -> Skip
+			e == BP: {pos[L] = 0; pos[LR] = 0; pos[CL] = 0; pos[C] = 1; pos[CR] = 1; pos[RL] = 1; pos[R] = 1; backwardPassCount = backwardPassCount + 1;} -> Skip
 			default: {pos[L] = 0; pos[LR] = 0; pos[CL] = 0; pos[C] = 1; pos[CR] = 0; pos[RL] = 0; pos[R] = 0;} -> Skip
 		}
 	default:
