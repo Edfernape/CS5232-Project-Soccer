@@ -101,7 +101,7 @@ Def(i, j, k, p) = [atkMidPos[p-2] == 1 || atkMidPos[p-1] == 1 || atkMidPos[p] ==
 
 
 // TODO: add guarded process for BackPass
-Mid(i, j, k, l, bp, p) = [atkForPos[p-2] == 1 || atkForPos[p-1] == 1 || atkForPos[p] == 1 || atkForPos[p+1] == 1 || atkForPos[p+2] == 1]shortPass -> pcase {
+Mid(i, j, k, l, p) = [atkForPos[p-2] == 1 || atkForPos[p-1] == 1 || atkForPos[p] == 1 || atkForPos[p+1] == 1 || atkForPos[p+2] == 1]shortPass -> pcase {
 	i: pass -> UpdatePos(p, SP); AtkFor
 	l: tackled{danger = 3;} -> Skip
 } [] [atkForPos[p-6] == 1 || atkForPos[p-5] == 1 || atkForPos[p-4] == 1 || atkForPos[p-3] == 1 || atkForPos[p+3] == 1 || atkForPos[p+4] == 1 || atkForPos[p+5] == 1 || atkForPos[p+6] == 1]longPass -> pcase {
@@ -114,7 +114,7 @@ Mid(i, j, k, l, bp, p) = [atkForPos[p-2] == 1 || atkForPos[p-1] == 1 || atkForPo
 
 // Added: pk pcase (Penalty Kick, determined by average foul values of defending team's defenders)
 // TODO: add guarded process for BackPass
-For(i, j, k, l, m, p, bp, pk) = [defKepPos[C] == 1]finish -> pcase {
+For(i, j, k, l, m, p, pk) = [defKepPos[C] == 1]finish -> pcase {
 	i: shoot -> UpdatePos(p, FI); DefKep
 	m: tackled -> pcase {
 		pk: penaltyKick -> UpdatePos(p, FI); DefKep // penalty kick
