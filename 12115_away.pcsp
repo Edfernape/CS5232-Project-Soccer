@@ -56,12 +56,13 @@ var defKepPos = [-1(6), 0, 0, 0, 1, 0, 0, 0, -1(6)];
 
 // For example keepers can only ShortPass or LongPass
 // Here 64, 64 represents the FIFA ShortPass and LongPass ratings for this particular player
-AtkKep = [pos[C] == 1]Kep_1(64, 64, C);
+AtkKep = [pos[C] == 1]Kep_1(64, 64, C); // Bradley Guzan; goalkeeping_kicking
 
 // Here for the defenders, the first 3 parameters are with respect to the ShortPass, LongPass, and prob. to lose the ball respectively 
 // The prob. to lose the ball for the attacking team's defenders was calculated based on the defending team forward's player ratings 
 // In particular, the probability to lose the ball was a weighted combination of the standing tackle, sliding tackle, and interception FIFA player ratings of the forwards
 AtkDef = [pos[R] == 1]Def(73, 71, 38, R) [] [pos[CR] == 1]Def(68, 63, 38, CR) [] [pos[CL] == 1]Def(68, 63, 38, CL) [] [pos[L] == 1]Def(72, 59, 38, L);
+// Leandro Bacuna, Ciaran Clark, Micah Richards, Jordan Amavi; (attacking_short_passing, skill_long_passing, avg(max(defending_standing_tackle, defending_sliding_tackle, mentality_interceptions)))
 
 // Similar to defenders, midfielders and forwards have their own specific parameters
 // See their processes below for more information on what those parameters are
@@ -70,11 +71,21 @@ AtkDef = [pos[R] == 1]Def(73, 71, 38, R) [] [pos[CR] == 1]Def(68, 63, 38, CR) []
 // Added: parameter pk, PenaltyKick to For
 // Added: guarded process BackwardPass to Mid and For
 AtkMid = [pos[RL] == 1]Mid(79, 76, 74, 59, RL) [] [pos[C] == 1]Mid(83, 80, 57, 59, C) [] [pos[LR] == 1]Mid(78, 73, 75, 59, LR);
+// Jordan Veretout, Ashley Westwood, Idrissa Gana Gueye; (attacking_short_passing, skill_long_passing, power_long_shots, avg(max(defending_standing_tackle, defending_sliding_tackle, mentality_interceptions)))
+
 AtkFor = [pos[RL] == 1]For(77, 75, 74, 77, 75, RL, 100) [] [pos[C] == 1]For(75, 73, 66, 76, 75, C, 100) [] [pos[LR] == 1]For(73, 65, 65, 69, 75, LR, 100);
+// Jordan Ayew (75), Gabriel Imuetinyan Agbonlahor (79), Scott Sinclair (45); (attacking_finishing, power_long_shots, attacking_volleys, attacking_heading_accuracy,
+// avg(max(defending_standing_tackle, defending_sliding_tackle, mentality_interceptions))),
+// avg(enemy team mentality_aggression) - player mentality_aggression)
+// Defending team defenders:
+// Simon Francis (77, 70, 68, 73)
+// Steve Cook (76, 71, 68, 74)
+// Tommy Elphick (74, 70, 61, 77)
+// Charlie Daniels (73, 72, 65, 51)
 
 ///////////// HOME TEAM PLAYERS (Defending Team) /////////////
 // Home team defenders, midfielders and forwards are already implicitly "defending" via the prob. to lose the ball parameter
-DefKep = [pos[C] == 1]Kep_2(72, C);
+DefKep = [pos[C] == 1]Kep_2(72, C); // Artur Boruc; goalkeeping_handling
 
 ///////////// Individual Positions /////////////
 // There is a guard to every action (e.g., shortPass) a player can take
