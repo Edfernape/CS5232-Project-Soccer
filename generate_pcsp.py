@@ -94,7 +94,7 @@ def get_mid(atk_seq, def_seq, atk_players, def_players):
       sp = mid_player['attacking_short_passing'].values[0]
       lp = mid_player['skill_long_passing'].values[0]
       ls = mid_player['power_long_shots'].values[0]
-      _str = f'[pos[{mid_seq[i]}] == 1]Def({sp}, {lp}, {ls}, {int(prob_lose)}, {mid_seq[i]})'
+      _str = f'[pos[{mid_seq[i]}] == 1]Mid({sp}, {lp}, {ls}, {int(prob_lose)}, {mid_seq[i]})'
       atkmid.append(_str)
     mid_str = ' [] '.join(atkmid)
     return f'AtkMid = {mid_str};'
@@ -106,7 +106,7 @@ def get_mid(atk_seq, def_seq, atk_players, def_players):
       sp = mid_player['attacking_short_passing'].values[0]
       lp = mid_player['skill_long_passing'].values[0]
       ls = mid_player['power_long_shots'].values[0]
-      _str = f'[pos[{middef_seq[i]}] == 1]Def({sp}, {lp}, {ls}, {int(prob_lose)}, {middef_seq[i]})'
+      _str = f'[pos[{middef_seq[i]}] == 1]MidDef({sp}, {lp}, {ls}, {int(prob_lose)}, {middef_seq[i]})'
       atkmiddef.append(_str)
     middef_str = ' [] '.join(atkmiddef)
     for i in range(len(mid_seq)):
@@ -114,7 +114,7 @@ def get_mid(atk_seq, def_seq, atk_players, def_players):
       sp = mid_player['attacking_short_passing'].values[0]
       lp = mid_player['skill_long_passing'].values[0]
       ls = mid_player['power_long_shots'].values[0]
-      _str = f'[pos[{mid_seq[i]}] == 1]Def({sp}, {lp}, {ls}, {int(prob_lose)}, {mid_seq[i]})'
+      _str = f'[pos[{mid_seq[i]}] == 1]Mid({sp}, {lp}, {ls}, {int(prob_lose)}, {mid_seq[i]})'
       atkmid.append(_str)
     mid_str = ' [] '.join(atkmid)
     return f'AtkMidDef = {middef_str};\nAtkMid = {mid_str};'
@@ -127,7 +127,7 @@ def get_mid(atk_seq, def_seq, atk_players, def_players):
       sp = mid_player['attacking_short_passing'].values[0]
       lp = mid_player['skill_long_passing'].values[0]
       ls = mid_player['power_long_shots'].values[0]
-      _str = f'[pos[{middef_seq[i]}] == 1]Def({sp}, {lp}, {ls}, {int(prob_lose)}, {middef_seq[i]})'
+      _str = f'[pos[{middef_seq[i]}] == 1]MidDef({sp}, {lp}, {ls}, {int(prob_lose)}, {middef_seq[i]})'
       atkmiddef.append(_str)
     middef_str = ' [] '.join(atkmiddef)
     for i in range(len(mid_seq)):
@@ -135,7 +135,7 @@ def get_mid(atk_seq, def_seq, atk_players, def_players):
       sp = mid_player['attacking_short_passing'].values[0]
       lp = mid_player['skill_long_passing'].values[0]
       ls = mid_player['power_long_shots'].values[0]
-      _str = f'[pos[{mid_seq[i]}] == 1]Def({sp}, {lp}, {ls}, {int(prob_lose)}, {mid_seq[i]})'
+      _str = f'[pos[{mid_seq[i]}] == 1]Mid({sp}, {lp}, {ls}, {int(prob_lose)}, {mid_seq[i]})'
       atkmid.append(_str)
     mid_str = ' [] '.join(atkmid)
     for i in range(len(midfor_seq)):
@@ -143,7 +143,7 @@ def get_mid(atk_seq, def_seq, atk_players, def_players):
       sp = mid_player['attacking_short_passing'].values[0]
       lp = mid_player['skill_long_passing'].values[0]
       ls = mid_player['power_long_shots'].values[0]
-      _str = f'[pos[{midfor_seq[i]}] == 1]Def({sp}, {lp}, {ls}, {int(prob_lose)}, {midfor_seq[i]})'
+      _str = f'[pos[{midfor_seq[i]}] == 1]MidFor({sp}, {lp}, {ls}, {int(prob_lose)}, {midfor_seq[i]})'
       atkmidfor.append(_str)
     midfor_str = ' [] '.join(atkmidfor)
     return f'AtkMidDef = {middef_str};\nAtkMid = {mid_str};\nAtkMidFor = {midfor_str};'
@@ -165,7 +165,7 @@ def get_for(atk_seq, def_seq, atk_players, def_players):
     ls = atkfor_player['power_long_shots'].values[0]
     vo = atkfor_player['attacking_volleys'].values[0]
     hd = atkfor_player['attacking_heading_accuracy'].values[0]
-    _str = f'[pos[{atkfor_seq[i]}] == 1]Def({fi}, {ls}, {vo}, {hd}, {int(prob_lose)}, {atkfor_seq[i]})'
+    _str = f'[pos[{atkfor_seq[i]}] == 1]For({fi}, {ls}, {vo}, {hd}, {int(prob_lose)}, {atkfor_seq[i]})'
     atkfor.append(_str)
   return ' [] '.join(atkfor)
 
