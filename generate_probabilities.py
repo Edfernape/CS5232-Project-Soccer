@@ -5,13 +5,15 @@ import numpy as np
 result_input_path = './pcsp_results'
 csv_output_path = './betting_simulation/new_probabilities'
 seasons = ['1516', '1617', '1718', '1819', '1920', '2021']
+input_file_name = {'1516': '20152016_results', '1617': '20162017_results', '1718': '20172018_results', 
+                   '1819': '20182019_results', '1920': '20192020_results', '2021': '20202021_results'}
 
 def softmax(x):
   e_x = np.exp(x - np.max(x))
   return e_x / e_x.sum()
 
 for season in seasons:
-  with open(f'{result_input_path}/{season}.txt', 'r') as f:
+  with open(f'{result_input_path}/{input_file_name[season]}.txt', 'r') as f:
     result = f.read()
     matches = re.findall(r'(.{5})_home\.pcsp', result)
     probs = re.findall(r'\[(.*?), (.*?)\];', result)

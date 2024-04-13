@@ -55,8 +55,13 @@ def simulate_betting(season):
             else: new_net -= 100
         
     print(f"season {season} net profit (original, new): (${original_net}, ${new_net})")
+    return original_net, new_net
 
 if __name__ == "__main__":
     seasons = [1516, 1617, 1718, 1819, 1920, 2021]
+    original_total, new_total = 0, 0
     for season in seasons:
-        simulate_betting(season)
+        original_net, new_net = simulate_betting(season)
+        original_total += original_net
+        new_total += new_net
+    print(f"total profit (original, new): (${original_total}, ${new_total})")
