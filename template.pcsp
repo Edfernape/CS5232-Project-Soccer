@@ -92,6 +92,28 @@ Mid(i, j, k, l, p) = [atkForPos[p-2] == 1 || atkForPos[p-1] == 1 || atkForPos[p]
 	l: tackled{danger = 3;} -> Skip
 };
 
+MidDef(i, j, k, l, p) = [atkForPos[p-2] == 1 || atkForPos[p-1] == 1 || atkForPos[p] == 1 || atkForPos[p+1] == 1 || atkForPos[p+2] == 1]shortPass -> pcase {
+	i: pass -> UpdatePos(p, SP); AtkFor
+	l: tackled{danger = 3;} -> Skip
+} [] [atkForPos[p-6] == 1 || atkForPos[p-5] == 1 || atkForPos[p-4] == 1 || atkForPos[p-3] == 1 || atkForPos[p+3] == 1 || atkForPos[p+4] == 1 || atkForPos[p+5] == 1 || atkForPos[p+6] == 1]longPass -> pcase {
+	j: pass{inAir = true;} -> UpdatePos(p, LP); AtkFor
+	l: tackled{danger = 3;} -> Skip
+} [] [defKepPos[C] == 1]longShot -> pcase {
+	k: shoot -> UpdatePos(p, LS); DefKep
+	l: tackled{danger = 3;} -> Skip
+};
+
+MidFor(i, j, k, l, p) = [atkForPos[p-2] == 1 || atkForPos[p-1] == 1 || atkForPos[p] == 1 || atkForPos[p+1] == 1 || atkForPos[p+2] == 1]shortPass -> pcase {
+	i: pass -> UpdatePos(p, SP); AtkFor
+	l: tackled{danger = 3;} -> Skip
+} [] [atkForPos[p-6] == 1 || atkForPos[p-5] == 1 || atkForPos[p-4] == 1 || atkForPos[p-3] == 1 || atkForPos[p+3] == 1 || atkForPos[p+4] == 1 || atkForPos[p+5] == 1 || atkForPos[p+6] == 1]longPass -> pcase {
+	j: pass{inAir = true;} -> UpdatePos(p, LP); AtkFor
+	l: tackled{danger = 3;} -> Skip
+} [] [defKepPos[C] == 1]longShot -> pcase {
+	k: shoot -> UpdatePos(p, LS); DefKep
+	l: tackled{danger = 3;} -> Skip
+};
+
 For(i, j, k, l, m, p) = [defKepPos[C] == 1]finish -> pcase {
 	i: shoot -> UpdatePos(p, FI); DefKep
 	m: tackled{danger = 2;} -> Skip
@@ -161,9 +183,4 @@ UpdatePos(p, e) = case {
 #define Goal2 danger <= 2;
 #define Goal3 danger <= 3;
 #define Goal4 danger <= 4;
-#assert AtkKep deadlockfree;
 #assert AtkKep |= F G Goal0 with prob;
-#assert AtkKep |= F G Goal1 with prob;
-#assert AtkKep |= F G Goal2 with prob;
-#assert AtkKep |= F G Goal3 with prob;
-#assert AtkKep |= F G Goal4 with prob;

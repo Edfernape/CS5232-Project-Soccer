@@ -1,3 +1,4 @@
 pcsp/*
 .DS_store
 .gitattributes
+*.exe
