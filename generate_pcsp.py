@@ -199,8 +199,10 @@ for year in years:
     away_pos_formatted, away_seq_formatted = get_seq_formatted(away_formation, away_sequence)
     home_pos_formatted, home_seq_formatted = get_seq_formatted(home_formation, home_sequence)
 
-    grid = get_pos_grid(away_pos_formatted)
-    grid_formatted = get_grid_formatted(grid)
+    away_grid = get_pos_grid(away_pos_formatted)
+    away_grid_formatted = get_grid_formatted(away_grid)
+    home_grid = get_pos_grid(home_pos_formatted)
+    home_grid_formatted = get_grid_formatted(home_grid)
     away_players = get_players(away_ids, rating_df)
     home_players = get_players(home_ids, rating_df)
 
@@ -210,7 +212,7 @@ for year in years:
     atkkep, defkep = get_kep(away_players, home_players)
     with open(r'template.pcsp', 'r') as file: 
       data = file.read() 
-      data = data.replace('__grid__', grid_formatted)
+      data = data.replace('__grid__', away_grid_formatted)
       data = data.replace('__AtkKep__', atkkep)
       data = data.replace('__AtkDef__', atkdef)
       data = data.replace('__AtkMid__', atkmid)
@@ -226,7 +228,7 @@ for year in years:
     atkkep, defkep = get_kep(home_players, away_players)
     with open(r'template.pcsp', 'r') as file: 
       data = file.read() 
-      data = data.replace('__grid__', grid_formatted)
+      data = data.replace('__grid__', home_grid_formatted)
       data = data.replace('__AtkKep__', atkkep)
       data = data.replace('__AtkDef__', atkdef)
       data = data.replace('__AtkMid__', atkmid)
