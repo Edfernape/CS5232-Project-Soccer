@@ -20,6 +20,8 @@ var pos = [-1(6), 0, 0, 0, 1, 0, 0, 0, -1(6)];
 
 // If the ball is in the air
 var inAir = false;
+// Boolean flags to define extra levels
+__flags__
 
 // Danger level for the attacking team
 // The lower the value, the lesser the danger
@@ -81,10 +83,16 @@ Def(i, j, k, p) = [atkMidPos[p-2] == 1 || atkMidPos[p-1] == 1 || atkMidPos[p] ==
 	k: tackled{danger = 4;} -> Skip
 };
 
-Mid(i, j, k, l, p) = [atkForPos[p-2] == 1 || atkForPos[p-1] == 1 || atkForPos[p] == 1 || atkForPos[p+1] == 1 || atkForPos[p+2] == 1]shortPass -> pcase {
+Mid(i, j, k, l, p, fk) = [isMidForOccupied && atkMidForPos[p-2] == 1 || atkMidForPos[p-1] == 1 || atkMidForPos[p] == 1 || atkMidForPos[p+1] == 1 || atkMidForPos[p+2] == 1]shortPass -> pcase {
+	i: pass -> UpdatePos(p, SP); AtkMidFor
+	l: tackled{danger = 3;} -> Skip
+}[] [isMidForOccupied && atkMidForPos[p-6] == 1 || atkMidForPos[p-5] == 1 || atkMidForPos[p-4] == 1 || atkMidForPos[p-3] == 1 || atkMidForPos[p+3] == 1 || atkMidForPos[p+4] == 1 || atkMidForPos[p+5] == 1 || atkMidForPos[p+6] == 1]longPass -> pcase {
+	j: pass{inAir = true;} -> UpdatePos(p, LP); AtkMidFor
+	l: tackled{danger = 3;} -> Skip
+} [] [!isMidForOccupied && atkForPos[p-2] == 1 || atkForPos[p-1] == 1 || atkForPos[p] == 1 || atkForPos[p+1] == 1 || atkForPos[p+2] == 1]shortPass -> pcase {
 	i: pass -> UpdatePos(p, SP); AtkFor
 	l: tackled{danger = 3;} -> Skip
-} [] [atkForPos[p-6] == 1 || atkForPos[p-5] == 1 || atkForPos[p-4] == 1 || atkForPos[p-3] == 1 || atkForPos[p+3] == 1 || atkForPos[p+4] == 1 || atkForPos[p+5] == 1 || atkForPos[p+6] == 1]longPass -> pcase {
+}[] [!isMidForOccupied && atkForPos[p-6] == 1 || atkForPos[p-5] == 1 || atkForPos[p-4] == 1 || atkForPos[p-3] == 1 || atkForPos[p+3] == 1 || atkForPos[p+4] == 1 || atkForPos[p+5] == 1 || atkForPos[p+6] == 1]longPass -> pcase {
 	j: pass{inAir = true;} -> UpdatePos(p, LP); AtkFor
 	l: tackled{danger = 3;} -> Skip
 } [] [defKepPos[C] == 1]longShot -> pcase {
@@ -92,11 +100,12 @@ Mid(i, j, k, l, p) = [atkForPos[p-2] == 1 || atkForPos[p-1] == 1 || atkForPos[p]
 	l: tackled{danger = 3;} -> Skip
 };
 
-MidDef(i, j, k, l, p) = [atkForPos[p-2] == 1 || atkForPos[p-1] == 1 || atkForPos[p] == 1 || atkForPos[p+1] == 1 || atkForPos[p+2] == 1]shortPass -> pcase {
-	i: pass -> UpdatePos(p, SP); AtkFor
+
+MidDef(i, j, k, l, p, fk) = [atkMidPos[p-2] == 1 || atkMidPos[p-1] == 1 || atkMidPos[p] == 1 || atkMidPos[p+1] == 1 || atkMidPos[p+2] == 1]shortPass -> pcase {
+	i: pass -> UpdatePos(p, SP); AtkMid
 	l: tackled{danger = 3;} -> Skip
-} [] [atkForPos[p-6] == 1 || atkForPos[p-5] == 1 || atkForPos[p-4] == 1 || atkForPos[p-3] == 1 || atkForPos[p+3] == 1 || atkForPos[p+4] == 1 || atkForPos[p+5] == 1 || atkForPos[p+6] == 1]longPass -> pcase {
-	j: pass{inAir = true;} -> UpdatePos(p, LP); AtkFor
+} [] [atkMidPos[p-6] == 1 || atkMidPos[p-5] == 1 || atkMidPos[p-4] == 1 || atkMidPos[p-3] == 1 || atkMidPos[p+3] == 1 || atkMidPos[p+4] == 1 || atkMidPos[p+5] == 1 || atkMidPos[p+6] == 1]longPass -> pcase {
+	j: pass{inAir = true;} -> UpdatePos(p, LP); AtkMid
 	l: tackled{danger = 3;} -> Skip
 } [] [defKepPos[C] == 1]longShot -> pcase {
 	k: shoot -> UpdatePos(p, LS); DefKep
