@@ -252,8 +252,14 @@ For(i, j, k, l, m, p, pk) = [defKepPos[C] == 1]finish -> pcase {
 		pk: penaltyKick -> UpdatePos(p, FI); DefKep // penalty kick
 		100 - pk: {danger = 2;} -> Skip // no penalty
 	}
-} [] [(backwardPassCount < BACKWARDPASS_MAX) && (atkMidPos[p-2] == 1 || atkMidPos[p-1] == 1 || atkMidPos[p] == 1 || atkMidPos[p+1] == 1 || atkMidPos[p+2] == 1)]backwardPass -> pcase {
+} [] [!isMidForOccupied && (backwardPassCount < BACKWARDPASS_MAX) && (atkMidPos[p-2] == 1 || atkMidPos[p-1] == 1 || atkMidPos[p] == 1 || atkMidPos[p+1] == 1 || atkMidPos[p+2] == 1)]backwardPass -> pcase {
 	i: pass -> UpdatePos(p, BP); AtkMid
+	m: tackled -> pcase {
+		pk: penaltyKick -> UpdatePos(p, FI); DefKep // penalty kick
+		100 - pk: {danger = 2;} -> Skip // no penalty
+	}
+} [] [isMidForOccupied && (backwardPassCount < BACKWARDPASS_MAX) && (atkMidForPos[p-2] == 1 || atkMidForPos[p-1] == 1 || atkMidForPos[p] == 1 || atkMidForPos[p+1] == 1 || atkMidForPos[p+2] == 1)]backwardPass -> pcase {
+	i: pass -> UpdatePos(p, BP); AtkMidFor
 	m: tackled -> pcase {
 		pk: penaltyKick -> UpdatePos(p, FI); DefKep // penalty kick
 		100 - pk: {danger = 2;} -> Skip // no penalty
