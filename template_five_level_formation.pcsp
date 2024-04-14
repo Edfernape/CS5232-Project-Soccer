@@ -83,7 +83,7 @@ Def(i, j, k, p) = [atkMidPos[p-2] == 1 || atkMidPos[p-1] == 1 || atkMidPos[p] ==
 	k: tackled{danger = 4;} -> Skip
 };
 
-Mid(i, j, k, l, p, fk) = [isMidForOccupied && atkMidForPos[p-2] == 1 || atkMidForPos[p-1] == 1 || atkMidForPos[p] == 1 || atkMidForPos[p+1] == 1 || atkMidForPos[p+2] == 1]shortPass -> pcase {
+Mid(i, j, k, l, p) = [isMidForOccupied && atkMidForPos[p-2] == 1 || atkMidForPos[p-1] == 1 || atkMidForPos[p] == 1 || atkMidForPos[p+1] == 1 || atkMidForPos[p+2] == 1]shortPass -> pcase {
 	i: pass -> UpdatePos(p, SP); AtkMidFor
 	l: tackled{danger = 3;} -> Skip
 }[] [isMidForOccupied && atkMidForPos[p-6] == 1 || atkMidForPos[p-5] == 1 || atkMidForPos[p-4] == 1 || atkMidForPos[p-3] == 1 || atkMidForPos[p+3] == 1 || atkMidForPos[p+4] == 1 || atkMidForPos[p+5] == 1 || atkMidForPos[p+6] == 1]longPass -> pcase {
@@ -101,7 +101,7 @@ Mid(i, j, k, l, p, fk) = [isMidForOccupied && atkMidForPos[p-2] == 1 || atkMidFo
 };
 
 
-MidDef(i, j, k, l, p, fk) = [atkMidPos[p-2] == 1 || atkMidPos[p-1] == 1 || atkMidPos[p] == 1 || atkMidPos[p+1] == 1 || atkMidPos[p+2] == 1]shortPass -> pcase {
+MidDef(i, j, k, l, p) = [atkMidPos[p-2] == 1 || atkMidPos[p-1] == 1 || atkMidPos[p] == 1 || atkMidPos[p+1] == 1 || atkMidPos[p+2] == 1]shortPass -> pcase {
 	i: pass -> UpdatePos(p, SP); AtkMid
 	l: tackled{danger = 3;} -> Skip
 } [] [atkMidPos[p-6] == 1 || atkMidPos[p-5] == 1 || atkMidPos[p-4] == 1 || atkMidPos[p-3] == 1 || atkMidPos[p+3] == 1 || atkMidPos[p+4] == 1 || atkMidPos[p+5] == 1 || atkMidPos[p+6] == 1]longPass -> pcase {
