@@ -35,7 +35,7 @@ var backwardPassCount = 0;
 
 // Actions based on FIFA player ratings
 // ShortPass, LongPass, LongShot, Finishing, Volley, and Header
-enum {SP, LP, LS, FI, VO, HD};
+enum {SP, LP, LS, FI, VO, HD, BP};
 
 // Soccer field grid
 // 1 means there is a player in that position
