@@ -20,6 +20,8 @@ var pos = [-1(6), 0, 0, 0, 1, 0, 0, 0, -1(6)];
 
 // If the ball is in the air
 var inAir = false;
+// Boolean flags to define extra levels
+__flags__
 
 // Danger level for the attacking team
 // The lower the value, the lesser the danger
