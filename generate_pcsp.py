@@ -212,7 +212,7 @@ for year in years:
     atkmid = get_mid(away_seq_formatted, home_seq_formatted, away_players, home_players)
     atkfor = get_for(away_seq_formatted, home_seq_formatted, away_players, home_players)
     atkkep, defkep = get_kep(away_players, home_players)
-    with open(r'template_backward_passing.pcsp', 'r') as file: 
+    with open(r'template.pcsp', 'r') as file: 
       data = file.read() 
       data = data.replace('__flags__', flagMidDef+'\n'+flagMidFor)
       data = data.replace('__grid__', away_grid_formatted)
@@ -231,7 +231,7 @@ for year in years:
     atkmid = get_mid(home_seq_formatted, away_seq_formatted, home_players, away_players)
     atkfor = get_for(home_seq_formatted, away_seq_formatted, home_players, away_players)
     atkkep, defkep = get_kep(home_players, away_players)
-    with open(r'template_backward_passing.pcsp', 'r') as file: 
+    with open(r'template.pcsp', 'r') as file: 
       data = file.read() 
       data = data.replace('__flags__', flagMidDef+'\n'+flagMidFor)
       data = data.replace('__grid__', home_grid_formatted)
