@@ -225,8 +225,8 @@ for year in years:
     with open(file_name, 'w') as file:
       file.write(data)
 
-    flagMidDef = f'var isMidDefOccupied = {"false" if len(home_seq_formatted)==3 else "true"}'
-    flagMidFor = f'var isMidForOccupied = {"true" if len(home_seq_formatted)==5 else "false"}'
+    flagMidDef = f'var isMidDefOccupied = {"false" if len(home_seq_formatted)==3 else "true"};'
+    flagMidFor = f'var isMidForOccupied = {"true" if len(home_seq_formatted)==5 else "false"};'
     atkdef = get_def(home_seq_formatted, away_seq_formatted, home_players, away_players)
     atkmid = get_mid(home_seq_formatted, away_seq_formatted, home_players, away_players)
     atkfor = get_for(home_seq_formatted, away_seq_formatted, home_players, away_players)
