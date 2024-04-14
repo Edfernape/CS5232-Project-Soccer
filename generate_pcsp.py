@@ -97,7 +97,7 @@ def get_mid(atk_seq, def_seq, atk_players, def_players):
       _str = f'[pos[{mid_seq[i]}] == 1]Mid({sp}, {lp}, {ls}, {int(prob_lose)}, {mid_seq[i]})'
       atkmid.append(_str)
     mid_str = ' [] '.join(atkmid)
-    return f'AtkMid = {mid_str};'
+    return f'AtkMidDef = Skip;\nAtkMid = {mid_str};\nAtkMidFor = Skip;'
   elif layer == 4:
     middef_seq = atk_seq[1]
     mid_seq = atk_seq[2]
@@ -117,7 +117,7 @@ def get_mid(atk_seq, def_seq, atk_players, def_players):
       _str = f'[pos[{mid_seq[i]}] == 1]Mid({sp}, {lp}, {ls}, {int(prob_lose)}, {mid_seq[i]})'
       atkmid.append(_str)
     mid_str = ' [] '.join(atkmid)
-    return f'AtkMidDef = {middef_str};\nAtkMid = {mid_str};'
+    return f'AtkMidDef = {middef_str};\nAtkMid = {mid_str};\nAtkMidFor = Skip;'
   elif layer == 5:
     middef_seq = atk_seq[1]
     mid_seq = atk_seq[2]
@@ -206,12 +206,15 @@ for year in years:
     away_players = get_players(away_ids, rating_df)
     home_players = get_players(home_ids, rating_df)
 
+    flagMidDef = f'var isMidDefOccupied = {"false" if len(away_seq_formatted)==3 else "true"};'
+    flagMidFor = f'var isMidForOccupied = {"true" if len(away_seq_formatted)==5 else "false"};'
     atkdef = get_def(away_seq_formatted, home_seq_formatted, away_players, home_players)
     atkmid = get_mid(away_seq_formatted, home_seq_formatted, away_players, home_players)
     atkfor = get_for(away_seq_formatted, home_seq_formatted, away_players, home_players)
     atkkep, defkep = get_kep(away_players, home_players)
     with open(r'template.pcsp', 'r') as file: 
       data = file.read() 
+      data = data.replace('__flags__', flagMidDef+'\n'+flagMidFor)
       data = data.replace('__grid__', away_grid_formatted)
       data = data.replace('__AtkKep__', atkkep)
       data = data.replace('__AtkDef__', atkdef)
@@ -222,12 +225,15 @@ for year in years:
     with open(file_name, 'w') as file:
       file.write(data)
 
+    flagMidDef = f'var isMidDefOccupied = {"false" if len(home_seq_formatted)==3 else "true"}'
+    flagMidFor = f'var isMidForOccupied = {"true" if len(home_seq_formatted)==5 else "false"}'
     atkdef = get_def(home_seq_formatted, away_seq_formatted, home_players, away_players)
     atkmid = get_mid(home_seq_formatted, away_seq_formatted, home_players, away_players)
     atkfor = get_for(home_seq_formatted, away_seq_formatted, home_players, away_players)
     atkkep, defkep = get_kep(home_players, away_players)
     with open(r'template.pcsp', 'r') as file: 
       data = file.read() 
+      data = data.replace('__flags__', flagMidDef+'\n'+flagMidFor)
       data = data.replace('__grid__', home_grid_formatted)
       data = data.replace('__AtkKep__', atkkep)
       data = data.replace('__AtkDef__', atkdef)
