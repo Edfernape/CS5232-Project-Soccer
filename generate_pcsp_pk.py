@@ -172,7 +172,7 @@ def get_for(atk_seq, def_seq, atk_players, def_players):
     vo = atkfor_player['attacking_volleys'].values[0]
     hd = atkfor_player['attacking_heading_accuracy'].values[0]
     _pk = pk - atkfor_player['mentality_aggression'].values[0]
-    _pk = 0 if _pk < 0 else int(_pk)
+    #_pk = 0 if _pk < 0 else int(_pk)
     _str = f'[pos[{atkfor_seq[i]}] == 1]For({fi}, {ls}, {vo}, {hd}, {int(prob_lose)}, {atkfor_seq[i]}, {_pk})'
     atkfor.append(_str)
   return ' [] '.join(atkfor)

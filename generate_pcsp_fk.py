@@ -79,7 +79,7 @@ def get_def(atk_seq, def_seq, atk_players, def_players):
     sp = atkdef_player['attacking_short_passing'].values[0]
     lp = atkdef_player['skill_long_passing'].values[0]
     _fk = fk - atkdef_player['mentality_aggression'].values[0]
-    _fk = 0 if _fk < 0 else int(_fk)
+    #_fk = 0 if _fk < 0 else int(_fk)
     _str = f'[pos[{atkdef_seq[i]}] == 1]Def({sp}, {lp}, {int(prob_lose)}, {atkdef_seq[i]}, {_fk})'
     atkdef.append(_str)
   return ' [] '.join(atkdef)
@@ -109,7 +109,7 @@ def get_mid(atk_seq, def_seq, atk_players, def_players):
       lp = mid_player['skill_long_passing'].values[0]
       ls = mid_player['power_long_shots'].values[0]
       _fk = fk - mid_player['mentality_aggression'].values[0]
-      _fk = 0 if _fk < 0 else int(_fk)
+      #_fk = 0 if _fk < 0 else int(_fk)
       _str = f'[pos[{mid_seq[i]}] == 1]Mid({sp}, {lp}, {ls}, {int(prob_lose)}, {mid_seq[i]}, {_fk})'
       atkmid.append(_str)
     mid_str = ' [] '.join(atkmid)
@@ -123,7 +123,7 @@ def get_mid(atk_seq, def_seq, atk_players, def_players):
       lp = mid_player['skill_long_passing'].values[0]
       ls = mid_player['power_long_shots'].values[0]
       _fk = fk - mid_player['mentality_aggression'].values[0]
-      _fk = 0 if _fk < 0 else int(_fk)
+      #_fk = 0 if _fk < 0 else int(_fk)
       _str = f'[pos[{middef_seq[i]}] == 1]MidDef({sp}, {lp}, {ls}, {int(prob_lose)}, {middef_seq[i]}, {_fk})'
       atkmiddef.append(_str)
     middef_str = ' [] '.join(atkmiddef)
@@ -133,7 +133,7 @@ def get_mid(atk_seq, def_seq, atk_players, def_players):
       lp = mid_player['skill_long_passing'].values[0]
       ls = mid_player['power_long_shots'].values[0]
       _fk = fk - mid_player['mentality_aggression'].values[0]
-      _fk = 0 if _fk < 0 else int(_fk)
+      #_fk = 0 if _fk < 0 else int(_fk)
       _str = f'[pos[{mid_seq[i]}] == 1]Mid({sp}, {lp}, {ls}, {int(prob_lose)}, {mid_seq[i]}, {_fk})'
       atkmid.append(_str)
     mid_str = ' [] '.join(atkmid)
@@ -148,7 +148,7 @@ def get_mid(atk_seq, def_seq, atk_players, def_players):
       lp = mid_player['skill_long_passing'].values[0]
       ls = mid_player['power_long_shots'].values[0]
       _fk = fk - mid_player['mentality_aggression'].values[0]
-      _fk = 0 if _fk < 0 else int(_fk)
+      #_fk = 0 if _fk < 0 else int(_fk)
       _str = f'[pos[{middef_seq[i]}] == 1]MidDef({sp}, {lp}, {ls}, {int(prob_lose)}, {middef_seq[i]}, {_fk})'
       atkmiddef.append(_str)
     middef_str = ' [] '.join(atkmiddef)
@@ -158,7 +158,7 @@ def get_mid(atk_seq, def_seq, atk_players, def_players):
       lp = mid_player['skill_long_passing'].values[0]
       ls = mid_player['power_long_shots'].values[0]
       _fk = fk - mid_player['mentality_aggression'].values[0]
-      _fk = 0 if _fk < 0 else int(_fk)
+      #_fk = 0 if _fk < 0 else int(_fk)
       _str = f'[pos[{mid_seq[i]}] == 1]Mid({sp}, {lp}, {ls}, {int(prob_lose)}, {mid_seq[i]}, {_fk})'
       atkmid.append(_str)
     mid_str = ' [] '.join(atkmid)
@@ -168,7 +168,7 @@ def get_mid(atk_seq, def_seq, atk_players, def_players):
       lp = mid_player['skill_long_passing'].values[0]
       ls = mid_player['power_long_shots'].values[0]
       _fk = fk - mid_player['mentality_aggression'].values[0]
-      _fk = 0 if _fk < 0 else int(_fk)
+      #_fk = 0 if _fk < 0 else int(_fk)
       _str = f'[pos[{midfor_seq[i]}] == 1]MidFor({sp}, {lp}, {ls}, {int(prob_lose)}, {midfor_seq[i]}, {_fk})'
       atkmidfor.append(_str)
     midfor_str = ' [] '.join(atkmidfor)
