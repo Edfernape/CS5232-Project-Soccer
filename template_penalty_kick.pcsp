@@ -130,17 +130,17 @@ For(i, j, k, l, m, p, pk) = [defKepPos[C] == 1]finish -> pcase {
 	m: FoulAndCardsCheck(pk, p, FOR_LINE, PENALTY_KICK, 2, FI); DefKep
 } [] [defKepPos[C] == 1]longShot -> pcase {
 	j: shoot -> UpdatePos(p, LS); DefKep
-	m: FoulAndCardsCheck(pk, p, FOR_LINE, PENALTY_KICK, 2, LS); DefKep
+	m: FoulAndCardsCheck(pk, p, FOR_LINE, PENALTY_KICK, 2, FI); DefKep
 } [] [defKepPos[C] == 1 && inAir == true]volley -> pcase {
 	k: shoot -> UpdatePos(p, VO); DefKep
-	m: FoulAndCardsCheck(pk, p, FOR_LINE, PENALTY_KICK, 2, VO); DefKep
+	m: FoulAndCardsCheck(pk, p, FOR_LINE, PENALTY_KICK, 2, FI); DefKep
 } [] [defKepPos[C] == 1 && inAir == true]header -> pcase {
 	l: shoot -> UpdatePos(p, HD); DefKep
-	m: FoulAndCardsCheck(pk, p, FOR_LINE, PENALTY_KICK, 2, HD); DefKep
+	m: FoulAndCardsCheck(pk, p, FOR_LINE, PENALTY_KICK, 2, FI); DefKep
 };
 
 FoulAndCardsCheck(aggressionDifference, playerPosition, linePosition, isPenaltyOrFreeKick, dangerLevel, actionType) = case {
-	aggressionDifference > 30: // foul committed by opposing team; get free kick or penalty kick
+	aggressionDifference > 20: // foul committed by opposing team; get free kick or penalty kick
 		UpdatePos(playerPosition, actionType)
 	default: // player is tackled and loses possession of ball
 		tackled { danger = dangerLevel; } -> Stop
