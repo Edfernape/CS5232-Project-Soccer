@@ -179,6 +179,8 @@ FoulAndCardsCheck(aggressionDifference, playerPosition, linePosition, isPenaltyO
 		tackled { danger = dangerLevel; } -> Stop
 };
 
+EjectPlayer() = Stop;
+
 UpdatePos(p, e) = case {
 	p == L: 
 		case {
