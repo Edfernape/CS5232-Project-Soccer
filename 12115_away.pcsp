@@ -226,9 +226,9 @@ Kep_2(i, p) = attemptSave -> pcase {
 
 // Added: process for fouls and yellow, red cards
 FoulAndCardsCheck(aggressionDifference, playerPosition, linePosition, isPenaltyOrFreeKick, dangerLevel, actionType) = case {
-	aggressionDifference < -50: // red card issued to player
+	aggressionDifference < -40: // red card issued to player
 		EjectPlayer()
-	aggressionDifference < -25: // yellow card issued to player
+	aggressionDifference < -30: // yellow card issued to player
 		IssueYellowCard(playerPosition, linePosition) []
 		[defendersCards[L] > 0 || defendersCards[LR] > 0 || defendersCards[CL] > 0 || defendersCards[C] > 0 || defendersCards[CR] > 0 || defendersCards[RL] > 0 || defendersCards[R] > 0 ||
 		midfieldersDefCards[L] > 0 || midfieldersDefCards[LR] > 0 || midfieldersDefCards[CL] > 0 || midfieldersDefCards[C] > 0 || midfieldersDefCards[CR] > 0 || midfieldersDefCards[RL] > 0 || midfieldersDefCards[R] > 0 ||
@@ -236,7 +236,7 @@ FoulAndCardsCheck(aggressionDifference, playerPosition, linePosition, isPenaltyO
 		midfieldersForCards[L] > 0 || midfieldersForCards[LR] > 0 || midfieldersForCards[CL] > 0 || midfieldersForCards[C] > 0 || midfieldersForCards[CR] > 0 || midfieldersForCards[RL] > 0 || midfieldersForCards[R] > 0 ||
 		forwardsCards[L] > 0 || forwardsCards[L] > 0 || forwardsCards[L] > 0 || forwardsCards[L] > 0 || forwardsCards[L] > 0 || forwardsCards[L] > 0 || forwardsCards[L] > 0]
 		EjectPlayer()
-	aggressionDifference > 30: // foul committed by opposing team; get free kick or penalty kick
+	aggressionDifference > 20: // foul committed by opposing team; get free kick or penalty kick
 		UpdatePos(playerPosition, actionType)
 	default: // player is tackled and loses possession of ball
 		tackled { danger = dangerLevel; } -> Stop
