@@ -159,7 +159,7 @@ Kep_2(i, p) = attemptSave -> pcase {
 };
 
 FoulAndCardsCheck(aggressionDifference, playerPosition, linePosition, isPenaltyOrFreeKick, dangerLevel, actionType) = case {
-	aggressionDifference > 50: // foul committed by opposing team; get free kick or penalty kick
+	aggressionDifference > 20: // foul committed by opposing team; get free kick or penalty kick
 		UpdatePos(playerPosition, actionType)
 	default: // player is tackled and loses possession of ball
 		tackled { danger = dangerLevel; } -> Stop
