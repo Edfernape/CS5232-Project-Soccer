@@ -20,6 +20,13 @@
 #define MID_FOR_LINE 3;
 #define FOR_LINE 4;
 
+// Arrays for tracking yellow/red cards
+var defendersCards = [-1(6), 0(7), -1(6)];
+var midfieldersDefCards = [-1(6), 0(7), -1(6)];
+var midfieldersCards = [-1(6), 0(7), -1(6)];
+var midfieldersForCards = [-1(6), 0(7), -1(6)];
+var forwardsCards = [-1(6), 0(7), -1(6)];
+
 // Grid of eligible positions that can receive the ball
 // This will change based on the previous position and the action taken
 // 1 means the position is eligible to receive the ball
