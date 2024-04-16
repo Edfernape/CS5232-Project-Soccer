@@ -11,6 +11,15 @@
 #define RL 11;
 #define R 12;
 
+#define PENALTY_KICK 0;
+#define FREE_KICK 1;
+
+#define DEF_LINE 0;
+#define MID_DEF_LINE 1;
+#define MID_LINE 2;
+#define MID_FOR_LINE 3;
+#define FOR_LINE 4;
+
 // Grid of eligible positions that can receive the ball
 // This will change based on the previous position and the action taken
 // 1 means the position is eligible to receive the ball
@@ -128,12 +137,6 @@ For(i, j, k, l, m, p, pk) = [defKepPos[C] == 1]finish -> pcase {
 } [] [defKepPos[C] == 1 && inAir == true]header -> pcase {
 	l: shoot -> UpdatePos(p, HD); DefKep
 	m: FoulAndCardsCheck(pk, p, FOR_LINE, PENALTY_KICK, 2, HD); DefKep
-} [] [!isMidForOccupied && (backwardPassCount < BACKWARDPASS_MAX) && (atkMidPos[p-2] == 1 || atkMidPos[p-1] == 1 || atkMidPos[p] == 1 || atkMidPos[p+1] == 1 || atkMidPos[p+2] == 1)]backwardPass -> pcase {
-	i: pass -> UpdatePos(p, BP); AtkMid
-	m: FoulAndCardsCheck(pk, p, FOR_LINE, PENALTY_KICK, 2, FI); DefKep
-} [] [isMidForOccupied && (backwardPassCount < BACKWARDPASS_MAX) && (atkMidForPos[p-2] == 1 || atkMidForPos[p-1] == 1 || atkMidForPos[p] == 1 || atkMidForPos[p+1] == 1 || atkMidForPos[p+2] == 1)]backwardPass -> pcase {
-	i: pass -> UpdatePos(p, BP); AtkMidFor
-	m: FoulAndCardsCheck(pk, p, FOR_LINE, PENALTY_KICK, 2, FI); DefKep
 };
 
 FoulAndCardsCheck(aggressionDifference, playerPosition, linePosition, isPenaltyOrFreeKick, dangerLevel, actionType) = case {
