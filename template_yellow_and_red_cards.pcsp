@@ -181,6 +181,15 @@ FoulAndCardsCheck(aggressionDifference, playerPosition, linePosition, isPenaltyO
 
 EjectPlayer() = Stop;
 
+IssueYellowCard(playerPosition, linePosition) = case {
+	linePosition == DEF_LINE: {defendersCards[playerPosition] = defendersCards[playerPosition] + 1;} -> Skip
+	linePosition == MID_DEF_LINE: {midfieldersDefCards[playerPosition] = midfieldersDefCards[playerPosition] + 1;} -> Skip	
+	linePosition == MID_LINE: {midfieldersCards[playerPosition] = midfieldersCards[playerPosition] + 1;} -> Skip	
+	linePosition == MID_FOR_LINE: {midfieldersForCards[playerPosition] = midfieldersForCards[playerPosition] + 1;} -> Skip	
+	linePosition == FOR_LINE: {forwardsCards[playerPosition] = forwardsCards[playerPosition] + 1;} -> Skip	
+	default: Skip
+};
+
 UpdatePos(p, e) = case {
 	p == L: 
 		case {
